@@ -1,0 +1,20 @@
+import React from 'react'
+import { Link } from 'react-router'
+
+export default React.createClass({
+  render() {
+    return (
+      <div>
+        <h1>React Router Tutorial</h1>
+        <ul role="nav">
+          <li><Link to="/about">About</Link></li>
+          <li><Link to="/repos">Repos</Link></li>
+        </ul>
+      </div>
+    )
+  }
+})
+/**
+ * Link. It's almost identical to the <a/> tag you're used to except that it's aware of the Router it was rendered in.
+ * Let's create some navigation in our App component.
+ */
