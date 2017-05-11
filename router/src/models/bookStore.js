@@ -1,21 +1,37 @@
-import { observable } from "mobx"
-
+import { observable, useStrict, action } from "mobx";
 
 class BookStore {
 
-@observable _books=[];
+  @observable _books = [];
+
   constructor() {
- //   this._books = [];
     this.fetchBooks();
- //   this._observer = null;
   }
+
   get books() {
     return this._books;
   }
 
- // subscribe(observer) {
- //   this._observer = observer;
- // }
+  @action
+  changeBooks(book_id) {
+    this._books.replace(book_id)
+  }
+
+  @action
+  newBook(title, info, moreInfo) {
+    let book = { "id": this._books.length + 1, "title": title, "info": info, "moreInfo": moreInfo }
+    this.addBook(book);
+  }
+
+  @action
+  addBook(book) {
+    this._books.push(book)
+  }
+
+  @action
+  removeBook(book_id) {
+    this._books.splice(this._books.findIndex((book) => { return book.id === book_id }), 1)
+  }
 
   getBook(id) {
     return this._books.filter((book) => {
@@ -23,26 +39,23 @@ class BookStore {
     })[0];
   }
 
-  fetchBooks = ()=> {
+  fetchBooks = () => {
     fetch("http://localhost:7777/books")
       .then((response) => {
         return response.json()
       })
       .then((response) => {
-        this._books = response;
+        this._books.replace(response);
         console.log("Got books from server");
-       // if (this._observer) {
-       //   this._observer.dataReady();
-       // }
       })
   }
 }
 
+
 let store = new BookStore();
+
+
+window.store = store;
+
+
 export default store;
-
-window.store = store; //på denne både gav vi via google engine push en ny bog til book store.
-//window.store.books.push
-
-//export default new BookStore();
-

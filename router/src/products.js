@@ -12,14 +12,9 @@ export default class Product extends React.Component {
     this.props.route.bookStore.fetchBooks();
   }
 
-/*
-  dataReady = () => {
-    this.forceUpdate();
-  }
-*/
-
   render() {
     const books = this.props.route.bookStore.books;
+    const bookStore = this.props.route.bookStore;
     return (
       <div>
         <h3>All our great books </h3>
@@ -28,7 +23,12 @@ export default class Product extends React.Component {
             {book.title} <Link to={`products/details/${book.id}`}>(details)</Link></li>)}
         </ul>
         <p><Link to="products/addBooks">Add book</Link></p>
+        <h2> Add Book</h2>
 
+        <input id="bookTitle" type="text" placeholder="Title" />
+        <input id="bookInfo" type="text" placeholder="Info" />
+        <input id="moreInfo" type="text" placeholder="More info" />
+        <button onClick={() => bookStore.newBook(document.getElementById("title"), document.getElementById("bookInfo"), document.getElementById("moreInfo"))}>Add new Book</button>
       </div>
     )
   }
